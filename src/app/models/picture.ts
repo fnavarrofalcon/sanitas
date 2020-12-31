@@ -3,7 +3,3 @@ export class Picture {
     photo: string;
     text: string;
 }
-
-export class Pictures {
-    pictures: Picture[];
-}

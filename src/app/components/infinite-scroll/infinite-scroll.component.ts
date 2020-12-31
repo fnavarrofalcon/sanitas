@@ -1,5 +1,5 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
-import { Picture, Pictures } from 'src/app/models/picture';
+import { Picture } from 'src/app/models/picture';
 import { PictureService } from 'src/app/services/picture.service';
 
 @Component({
@@ -9,29 +9,25 @@ import { PictureService } from 'src/app/services/picture.service';
 })
 export class InfiniteScrollComponent implements OnInit {
 
-    @Input() picturesData: Array<Picture>;
-    private countIndex = 0
-    private finishPage;
-    private actualPage: number;
-    private picturePerPage = 12;
-    public showGoUpButton: boolean;
-    public showScrollHeight = 400;
-    public hideScrollHeight = 200;
-    public filterValue;
-    public filterType;
+    @Input() picturesData: Picture[];
+    private countIndex: number = 0
+    private finishPage: number;
+    private actualPage: number = 1;
+    private picturePerPage: number = 12;
+    public picturesAmount: Picture[] = [];
+    public showGoUpButton: boolean = false;
+    public showScrollHeight: number = 400;
+    public hideScrollHeight: number = 200;
+    public filterValue: string;
+    public filterType: string;
 
-    constructor(private pictureService: PictureService) {
-        this.actualPage = 1;
-        this.showGoUpButton = false;
-    }
+    constructor(private pictureService: PictureService) { }
 
     ngOnInit() {
         this.finishPage = this.calculateFinishPage(
-            this.pictureService.getPicturesLength(), 
+            this.picturesData.length,
             this.picturePerPage
         );
-        console.log(this.finishPage);
-        this.picturesData = new Array<Picture>();
         this.addPicturesPerPage();
     }
 
@@ -52,7 +48,7 @@ export class InfiniteScrollComponent implements OnInit {
 
     private addPicturesPerPage() {
         for (let i = 0; i < this.picturePerPage; i++) {
-            this.picturesData.push(this.pictureService.getPicturesByIndex(this.countIndex));
+            this.picturesAmount.push(this.picturesData[this.countIndex]);
             this.countIndex++;
         }
     }
@@ -60,7 +56,7 @@ export class InfiniteScrollComponent implements OnInit {
     public onScroll() {
         if (this.actualPage < this.finishPage) {
             this.addPicturesPerPage();
-            this.actualPage ++;
+            this.actualPage++;
         } else {
             console.log('No more lines. Finish page!');
         }
@@ -70,23 +66,17 @@ export class InfiniteScrollComponent implements OnInit {
         if (items % itemsPerPage === 0) {
             return items / itemsPerPage;
         } else {
-            return Math.floor(items/itemsPerPage) + (items % itemsPerPage);
+            return Math.floor(items / itemsPerPage) + (items % itemsPerPage);
         }
     }
 
-    public searchById(event, type) {
+    public search(event) {
         this.filterValue = event.target.value;
-        this.filterType = type;
-    }
-
-    public searchByText(event, type) {
-        this.filterValue = event.target.value;
-        this.filterType = type;
     }
 
     public scrollTop() {
         document.body.scrollTop = 0; // Safari
         document.documentElement.scrollTop = 0; // Other
-      }
+    }
 
 }

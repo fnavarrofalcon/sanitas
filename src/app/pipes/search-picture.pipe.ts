@@ -6,25 +6,14 @@ import { Picture } from '../models/picture';
 })
 export class SearchPicturePipe implements PipeTransform {
 
-    transform(value, filterValue, filterType): Picture[] {
+    transform(value, filterValue, valueComplete): Picture[] {
         let result: Picture[] = [];
         if (!filterValue) {
             return value;
         } else {
-            switch (filterType) {
-                case 'ID':
-                    result.push(value.find((picture: Picture) => {
-                        return picture.id.toString() === filterValue;
-                    }));
-                    break;
-                case 'TEXT':
-                    result = value.filter((picture: Picture) => {
-                        return picture.text.includes(filterValue);
-                    });
-                    break;
-                default:
-                    break;
-            }
+            result = valueComplete.filter((picture: Picture) => {
+                return picture.text.toLowerCase().includes(filterValue.toLowerCase()) || picture.id.toString() === filterValue;
+            });
             return result;
         }
         
