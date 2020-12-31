@@ -1,6 +1,5 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Picture } from 'src/app/models/picture';
-import { PictureService } from 'src/app/services/picture.service';
 
 @Component({
     selector: 'app-infinite-scroll',
@@ -21,7 +20,7 @@ export class InfiniteScrollComponent implements OnInit {
     public filterValue: string;
     public filterType: string;
 
-    constructor(private pictureService: PictureService) { }
+    constructor() { }
 
     ngOnInit() {
         this.finishPage = this.calculateFinishPage(

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Picture } from '../models/picture';
 import faker from 'faker';
 
@@ -12,7 +12,7 @@ export class PictureService {
 
     constructor() { }
 
-    public getPictures() {
+    public getPictures(): Observable<Picture[]>{
         this.getMockPictures();
         return of(this.picture$);
     }

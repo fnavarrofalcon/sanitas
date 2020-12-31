@@ -12,9 +12,6 @@ export class PictureViewComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit(): void {
-        console.log(this.picture);
-        
-    }
+    ngOnInit(): void { }
 
 }
