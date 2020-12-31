@@ -17,7 +17,7 @@ import { PictureViewComponent } from './components/picture-view/picture-view.com
     HeaderComponent,
     InfiniteScrollComponent,
     SearchPicturePipe,
-    PictureViewComponent
+    PictureViewComponent,
   ],
   imports: [
     BrowserModule,

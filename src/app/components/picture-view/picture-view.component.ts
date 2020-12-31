@@ -12,6 +12,7 @@ export class PictureViewComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void { 
+    }
 
 }
